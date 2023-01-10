@@ -2,6 +2,27 @@
   text-align: center;
 }
 
+*{
+  color: black;
+}
+
+html{
+  
+}
+
+canvas{
+  background-color: rgba(245, 245, 245, 0.711);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+#root{
+  background-image: url("./images/SL_042620_30310_19.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -21,7 +42,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -38,10 +58,8 @@
 }
 
 nav{
-  background-color: #282c34;
   padding: 0;
- 
-  height: 80px;
+  background-color: #c1c1c1
 }
 nav ul{
   display: flex;
@@ -61,18 +79,16 @@ nav ul li{
 
 nav ul li a{
   text-decoration: none;
-  color: #fff;
   font-size: 1.2rem;
 }
 
-nav .container{
-  background-color: rgb(33,37,41);
-}
+
 
 #footer{
  position: static;
  bottom: 0;
  width: 100vw;
+ height: 100%;
  margin: auto;
  justify-content: center;
 }
@@ -80,3 +96,40 @@ nav .container{
 #footer a {
   margin: .5rem 1rem;
 }
+
+#footer, nav .container{
+background-color: #d4d6dc93;
+}
+
+
+#base, #quote{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 50vw;
+  min-width: 57vw;
+  
+}
+
+
+button{
+  background-color: transparent;
+}
+#toCurrency, #fromCurrency{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: .5em;
+
+}
+
+.input-group{
+  display: flex;
+}
+
+#form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+

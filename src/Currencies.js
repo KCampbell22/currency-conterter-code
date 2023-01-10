@@ -1,5 +1,5 @@
 // currencies.js
-const currencies = {
+const currencyList = {
   AUD: {
     symbol: "$",
     name: "Australian dollar",
@@ -44,10 +44,7 @@ const currencies = {
     symbol: "$",
     name: "Hong Kong dollar",
   },
-  HRK: {
-    symbol: "kn",
-    name: "Croatian kuna",
-  },
+
   HUF: {
     symbol: "Ft",
     name: "Hungarian forint",
@@ -104,10 +101,7 @@ const currencies = {
     symbol: "lei",
     name: "Romanian leu",
   },
-  RUB: {
-    symbol: "₽",
-    name: "Russian ruble",
-  },
+
   SEK: {
     symbol: "kr",
     name: "Swedish krona",
@@ -134,4 +128,4 @@ const currencies = {
   },
 };
 
-export default currencies;
+export default currencyList;

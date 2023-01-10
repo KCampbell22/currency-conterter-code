@@ -1,9 +1,10 @@
 {
   "name": "currency-app",
+  "homepage": "https://kcampbell22.github.io/currency-converter",
   "version": "0.1.0",
-  "homepage": " https://kcampbell22.github.io/currency-converter/",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

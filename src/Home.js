@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Select, Table, Input } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CurrencyTable from "./CurrencyTable";
+import { Line } from "react-chartjs-2";
+import currencyList from "./Currencies";
+// import dropdwon icon from icons folder /Users/kadecampbell/currency-app/public/icons/dropdown-2-48.png
+import dropdown from "./images/dropdown-2-48.png";
 
 const API_URL = "https://www.frankfurter.app/latest";
 
@@ -10,15 +13,6 @@ function Home() {
   const [baseCurrency, setBaseCurrency] = useState("USD");
   const [conversions, setConversions] = useState([]);
 
-  useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrencies(Object.keys(data.rates));
-        setConversions(data.rates);
-      });
-  }, []);
-
   const handleCurrencyChange = (currency) => {
     setBaseCurrency(currency);
 
@@ -26,28 +20,17 @@ function Home() {
       .then((res) => res.json())
       .then((data) => {
         setConversions(data.rates);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
-  const columns = [
-    {
-      title: "Currency",
-      dataIndex: "currency",
-      key: "currency",
-    },
-    {
-      title: "Conversion",
-      dataIndex: "conversion",
-      key: "conversion",
-      render: (conversion) => (
-        <a
-          href={`/currency-converter/converter?from=${baseCurrency}&to=${conversion.currency}`}
-        >
-          {conversion.amount}
-        </a>
-      ),
-    },
-  ];
+  // get currencies from GetLatestCurrencies
+  useEffect(() => {
+    // currencies is in the currencies.js file
+    setCurrencies(currencyList);
+  }, []);
 
   const dataSource = Object.keys(conversions).map((currency) => ({
     key: currency,
@@ -57,18 +40,37 @@ function Home() {
 
   return (
     <>
-      <Select
-        defaultValue={baseCurrency}
-        className={"p-2"}
-        onChange={handleCurrencyChange}
-      >
-        {currencies.map((currency) => (
-          <Select.Option key={currency} value={currency}>
-            {currency}
-          </Select.Option>
-        ))}
-      </Select>
-      <Table dataSource={dataSource} columns={columns} />
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1>Currency Converter</h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <label htmlFor="base-select">
+              Base Currency
+              <select
+                className="form-control form-select"
+                id="base-select"
+                value={baseCurrency}
+                onChange={(e) => handleCurrencyChange(e.target.value)}
+              >
+                {Object.keys(currencyList).map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <CurrencyTable base={baseCurrency} currencies={currencyList} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -5,25 +5,56 @@ import React from "react";
 const Footer = () => {
   return (
     <React.Fragment>
-      <footer className="text-center bg-dark text-white">
-        <div className="container pt-4">
-          <section className="mb-4"></section>
+      <footer
+        class="text-center text-white"
+        style={{ backgroundColor: "#f1f1f1" }}
+      >
+        <div class="container pt-4">
+          <section class="mb-4">
+            <a
+              class="btn btn-link btn-floating btn-lg text-dark m-1"
+              href="https://twitter.com/k_campbell15"
+              role="button"
+              data-mdb-ripple-color="dark"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+
+            <a
+              class="btn btn-link btn-floating btn-lg text-dark m-1"
+              href="https://www.instagram.com/kcampbelldev/"
+              role="button"
+              data-mdb-ripple-color="dark"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+
+            <a
+              class="btn btn-link btn-floating btn-lg text-dark m-1"
+              href="https://www.linkedin.com/in/kade-campbell-21a3601aa/"
+              role="button"
+              data-mdb-ripple-color="dark"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a
+              class="btn btn-link btn-floating btn-lg text-dark m-1"
+              href="https://github.com/KCampbell22"
+              role="button"
+              data-mdb-ripple-color="dark"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+          </section>
         </div>
 
-        {/* Github */}
-
         <div
-          className="text-center text-light p-3 d-flex w-100 align-items-center m-auto"
-          id="footer"
+          class="text-center text-dark p-3"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
-          © Kade Campbell 2022:
-          <a
-            href="https://github.com/KCampbell22"
-            className="text-light ms-2"
-            style={{ textDecoration: "none" }}
-            role="button"
-          >
-            Github
+          © 2022 kadecampbell:
+          <a class="text-dark" href="https://www.kadecampbelldev.com/">
+            kadecampbelldev.com
           </a>
         </div>
       </footer>

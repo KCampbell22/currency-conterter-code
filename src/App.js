@@ -8,7 +8,8 @@ import "./App.css";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 import Home from "./Home";
-import React from "react";
+// import fontawesome from "@fortawesome/fontawesome";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const App = () => {
   return (
@@ -16,11 +17,10 @@ const App = () => {
       <Router basename="/currency-converter">
         <Navigation />
         <Routes>
-          <Route path={"/"} exact element={<Home />} />
-          <Route
-            path={"/converter/:base:quote"}
-            element={<CurrencyConverter />}
-          />
+          <Route exact path="/" element={<Home />} />
+
+          <Route path="/converter" element={<CurrencyConverter />} />
+          <Route path="/table" element={<CurrencyTable />} />
         </Routes>
 
         <Footer />

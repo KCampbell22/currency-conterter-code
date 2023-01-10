@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import currencies from "./Currencies";
 import { Chart } from "chart.js/auto";
 import "./converter.css";
+import { useLocation } from "react-router-dom";
+import Swap from "./images/swap.svg";
 const CurrencyConverter = (props) => {
-  const { base, quote } = useLocation();
-
-  const [fromCurrency, setFromCurrency] = useState(base || "USD");
-  const [toCurrency, setToCurrency] = useState(quote || "EUR");
-  // use params to set the base and quote currencies
+  // get the search params from the url
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const base = searchParams.get("from");
+  const quote = searchParams.get("to");
+  const [fromCurrency, setFromCurrency] = useState(base);
+  const [toCurrency, setToCurrency] = useState(quote);
 
   const [dollarAmount, setDollarAmount] = useState(1);
   const [conversionRate, setConversionRate] = useState(0);
   const [conversionAmount, setConversionAmount] = useState();
   const [chart, setChart] = useState();
+
   const chartRef = useRef(document.getElementById("myChart"));
 
   // get the rates from the API
@@ -59,6 +63,7 @@ const CurrencyConverter = (props) => {
   useEffect(() => {
     getConversionRate();
     getConversionAmount();
+    console.log(fromCurrency);
   }, [
     fromCurrency,
     toCurrency,
@@ -132,95 +137,126 @@ const CurrencyConverter = (props) => {
   };
 
   useEffect(() => {
-    getHistoricalData(fromCurrency, toCurrency);
+    getHistoricalData(base, quote);
   }, [fromCurrency, toCurrency]);
+
+  //switch symbols when swapping currencies
+
+  // swap currencies
+
+  const swapCurrencies = () => {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+  };
 
   return (
     <React.Fragment>
-      <div>
-        <div>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-12">
-                <h1>Currency Converter</h1>
-              </div>
+      <div className="container-fluid" id="form">
+        <div className="row">
+          <div className="col-12">
+            <h1>Currency Converter</h1>
+          </div>
+        </div>
+        <div className="row" id="base">
+          <div className="col">
+            <div className="form-group">
+              <select
+                className="form-control form-select"
+                id="toCurrency"
+                value={fromCurrency}
+                onChange={changeBaseCurrency} // handle currency changes
+              >
+                {Object.keys(currencies).map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="form-group">
-                  <label htmlFor="fromCurrency">From</label>
-                  <select
-                    className="form-control"
-                    id="fromCurrency"
-                    value={fromCurrency}
-                    onChange={changeBaseCurrency} // handle currency changes
-                  >
-                    {Object.keys(currencies).map((currency) => (
-                      <option key={currency} value={currency}>
-                        {currency}
-                      </option>
-                    ))}
-                  </select>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    {currencies[fromCurrency].symbol}
+                  </span>
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="form-group">
-                  <label htmlFor="toCurrency">To</label>
-                  <select
-                    className="form-control"
-                    id="toCurrency"
-                    value={toCurrency}
-                    onChange={changeToCurrency} // handle currency changes
-                  >
-                    {Object.keys(currencies).map((currency) => (
-                      <option key={currency} value={currency}>
-                        {currency}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="form-group">
-                  <label htmlFor="dollarAmount">Amount</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="dollarAmount"
-                    value={dollarAmount}
-                    onChange={changeDollarAmount} // handle amount changes
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="form-group">
-                  <label htmlFor="conversionAmount">Conversion Amount</label>
-                  <input
-                    type="number"
-                    value={conversionAmount}
-                    className="form-control"
-                    id="conversionAmount"
-                    readOnly
-                  />
-                </div>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="dollarAmount"
+                  value={dollarAmount}
+                  onChange={changeDollarAmount} // handle amount changes
+                />
               </div>
             </div>
           </div>
-          <div className="container-fluid">
-            <div class="row">
-              <div
-                id="canvas-container"
-                className="col-12 d-flex justify-content-center"
+        </div>
+        {/* swap button */}
+        <div className="row">
+          <div className="col-12">
+            <button
+              className="btn btn-transparent"
+              id="swap"
+              onClick={swapCurrencies}
+            >
+              <img src={Swap} alt="swap" id="swap" />
+            </button>
+          </div>
+        </div>
+        {/* From currency and dollar amount */}
+        <div className="row" id="quote">
+          <div className="col">
+            <div className="form-group">
+              <select
+                className="form-control form-select"
+                id="fromCurrency"
+                value={toCurrency}
+                onChange={changeToCurrency} // handle currency changes
               >
-                <canvas id="myChart" ref={chartRef} />
+                {Object.keys(currencies).map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    {/*dynamically add currency symbol if currency is swapped */}
+                    {currencies[toCurrency].symbol}
+                  </span>
+                </div>
+
+                <input
+                  type="number"
+                  value={conversionAmount}
+                  className="form-control"
+                  id="conversionAmount"
+                  readOnly
+                />
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* To currency and conversion amount */}
+
+      {/* Chart */}
+
+      <div className="container-fluid mb-3 mt-3">
+        <div class="row">
+          <div
+            id="canvas-container"
+            className="col-12 d-flex justify-content-center"
+          >
+            <canvas id="myChart" ref={chartRef} />
           </div>
         </div>
       </div>
